@@ -8,4 +8,4 @@
 - Firebase Firestore Database.
 
 ## Design
-- Design mockups for this project could be found at [project anansi design](https://www.figma.com/file/ZuNp3tAbQ1vaKNw55AWXx4/Project-anansi?type=design&node-id=0%3A1&mode=design&t=UUlSuhHz9yzgxzSi-1)
+- Design mockups for this project could be found at [project anansi figma](https://www.figma.com/file/ZuNp3tAbQ1vaKNw55AWXx4/Project-anansi?type=design&node-id=0%3A1&mode=design&t=UUlSuhHz9yzgxzSi-1).
