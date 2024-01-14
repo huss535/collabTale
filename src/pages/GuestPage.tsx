@@ -1,4 +1,4 @@
-import { IconButton, Card, CardHeader, CardBody, CardFooter, Heading, Text, Divider, SimpleGrid, HStack, Tag, TagLabel, Stack } from '@chakra-ui/react';
+import { IconButton, Card, CardHeader, CardBody, CardFooter, Heading, Text, Divider, SimpleGrid, Button, Stack } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons'
 import { db } from '../firebase';
 import { story } from '../types';
@@ -92,15 +92,13 @@ function GuestPage() {
                             </Stack>
                             <CardFooter style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }} textAlign='center'>
                                 <Text>Written by: <br /> {story.creator} </Text>
-                                <IconButton
-                                    _hover={{ borderColor: '#edbd64' }}
-                                    onClick={() => handleButtonClick(story)}
-                                    borderColor="#B68D40"
-                                    isRound={true}
-                                    variant='solid'
-                                    color="#B68D40"
-                                    aria-label='Search database'
-                                    icon={<AddIcon />} />
+                                <Button
+                                    onClick={() => { handleButtonClick(story) }}
+                                    colorScheme='yellow'
+                                    variant='outline'
+                                    _hover={{ borderColor: "#d9c193" }}
+                                >Explore</Button>
+
                             </CardFooter>
                         </Card>
 

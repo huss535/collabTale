@@ -1,9 +1,12 @@
 import { useLocation } from "react-router-dom";
-import { Heading, Card, CardBody } from "@chakra-ui/react";
+import { useState } from "react";
+import { Heading, Card, CardBody, Text, CardFooter, Divider, IconButton, AbsoluteCenter, Box } from "@chakra-ui/react";
+import { AddIcon } from '@chakra-ui/icons'
 import { story } from '../types';
 function StoryDisplay() {
     const { state } = useLocation();
     const { storyOpened }: { storyOpened: story } = state;
+    let count: number = 0;
     return (<div style={{
 
         display: 'flex',
@@ -31,9 +34,36 @@ function StoryDisplay() {
         >
 
             <CardBody>
+                {storyOpened.storyText.map((section: string) => {
+                    count += 1;
+                    return (<>
+                        <Box position='relative'>
+                            <Divider />
+                            <AbsoluteCenter bg='white' px='4'>
+                                {`Entry ${count}`}
 
+                            </AbsoluteCenter>
+                        </Box>
+                        <br />
+                        <Text>
+                            {section}
+                        </Text>
+
+                    </>);
+                })}
 
             </CardBody>
+            <Divider />
+            <CardFooter>
+                <IconButton
+                    aria-label='Add entry for story'
+                    icon={<AddIcon />}
+                    colorScheme="yellow"
+                    variant='outline'
+                    _hover={{ borderColor: "#d9c193" }}
+
+                />
+            </CardFooter>
         </Card>
 
     </div>);
