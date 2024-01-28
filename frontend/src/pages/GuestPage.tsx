@@ -1,58 +1,36 @@
-import {  Card, CardHeader, CardBody, CardFooter, Heading, Text, Divider, SimpleGrid, Button, Stack } from '@chakra-ui/react';
-import { db } from '../firebase';
-import { story } from '../types';
-import { useEffect, useState } from 'react';
-import { collection, getDocs } from "firebase/firestore";
+import React, { useEffect, useState } from 'react';
+import { Card, CardHeader, CardBody, CardFooter, Heading, Text, Divider, SimpleGrid, Button, Stack } from '@chakra-ui/react';
+import { story } from '../types'; // Assuming you have a 'types' file with the story type defined
 import DisplayTag from '../components/DisplayTag';
 import { useNavigate } from 'react-router-dom';
-import 'firebase/firestore';
-
+import axios from 'axios';
+import 'firebase/firestore'; // Not sure if this import is necessary here
 
 function GuestPage() {
-
     const [stories, setStories] = useState<story[]>([]);
-    const [isButtonClicked, setIsButtonClicked] = useState(false);
+    const [isButtonClicked, setIsButtonClicked] = useState<boolean>(false); // Ensure correct initialization
+
     const navigate = useNavigate();
 
-
     useEffect(() => {
-        const fetch = async () => {
-            const querySnapshot = await getDocs(collection(db, "story"));
-            const fetchedStories: story[] = [];
-            querySnapshot.forEach((doc: any) => {
-                const data = doc.data();
-                console.log(data.createdAt);
-                let storyEntry: story = {
-                    id: data.id,
-                    title: data.title,
-                    synopsis: data.synopsis,
-                    storyText: data.storyText,
-                    creator: data.creator,
-                    categories: data.categories,
-                    createdAt: data.createdAt.toDate()
-
-
-                }
-
-                fetchedStories.push(storyEntry);
-
+        axios.get(import.meta.env.VITE_API + "/firestore/stories")
+            .then((response) => {
+                setStories(response.data);
+            })
+            .catch((error) => {
+                console.error("Error fetching stories:", error);
             });
-            setStories(fetchedStories);
+    }, []); // Empty dependency array to run only once on component mount
 
-        }
-        fetch();
-        console.log(stories);
-
-    }, [])
-
+    console.log(stories); // Move this inside useEffect or remove it from here
 
     const handleButtonClick = (storyOpened: story) => {
         // Toggle the click state
         setIsButtonClicked(!isButtonClicked);
         navigate('/DisplayStory', { state: { storyOpened } });
     };
-    return (
 
+    return (
         <div style={{
             backgroundColor: '#FFFFE4',
             display: 'flex',
@@ -60,49 +38,37 @@ function GuestPage() {
             justifyContent: 'center',
             alignItems: 'center',
             boxSizing: 'border-box',
-
         }}>
-
             <SimpleGrid columns={1} spacing={18}>
-
-                {stories.map((story) => {
-                    return (
-
-                        <Card style={{
-                            border: 'solid',
-                            borderWidth: '3px',
-                            width: '450px',
-                            borderRadius: '12px',
-                            borderColor: "#B68D40"
-                        }}
-                            boxShadow='xl'>
-
-                            <CardHeader color="#B68D40" textAlign='center'>
-                                <Heading>{story.title}</Heading>
-                            </CardHeader>
-                            <Divider />
-                            <Stack spacing={5} align='center'>
-
-                                <CardBody textAlign='center'>
-                                    <Text>{story.synopsis}</Text>
-
-                                </CardBody>
-                                <DisplayTag categories={story.categories} />
-                            </Stack>
-                            <CardFooter style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }} textAlign='center'>
-                                <Text>Written by: <br /> {story.creator} </Text>
-                                <Button
-                                    onClick={() => { handleButtonClick(story) }}
-                                    colorScheme='yellow'
-                                    variant='outline'
-                                    _hover={{ borderColor: "#d9c193" }}
-                                >Explore</Button>
-
-                            </CardFooter>
-                        </Card>
-
-                    );
-                })}
+                {stories.map((story) => (
+                    <Card key={story.id} style={{ // Assuming each story has a unique 'id'
+                        border: 'solid',
+                        borderWidth: '3px',
+                        width: '450px',
+                        borderRadius: '12px',
+                        borderColor: "#B68D40"
+                    }} boxShadow='xl'>
+                        <CardHeader color="#B68D40" textAlign='center'>
+                            <Heading>{story.title}</Heading>
+                        </CardHeader>
+                        <Divider />
+                        <Stack spacing={5} align='center'>
+                            <CardBody textAlign='center'>
+                                <Text>{story.synopsis}</Text>
+                            </CardBody>
+                            <DisplayTag categories={story.categories} />
+                        </Stack>
+                        <CardFooter style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }} textAlign='center'>
+                            <Text>Written by: <br /> {story.creator} </Text>
+                            <Button
+                                onClick={() => { handleButtonClick(story) }}
+                                colorScheme='yellow'
+                                variant='outline'
+                                _hover={{ borderColor: "#d9c193" }}
+                            >Explore</Button>
+                        </CardFooter>
+                    </Card>
+                ))}
             </SimpleGrid>
         </div>
     );
