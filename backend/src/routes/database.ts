@@ -16,7 +16,7 @@ router.get("/stories", async (req: Request, res: Response) => {
         const data = doc.data();
         console.log(data.createdAt);
         let storyEntry: story = {
-            id: data.id,
+            id: doc.id,
             title: data.title,
             synopsis: data.synopsis,
             storyText: data.storyText,
@@ -34,11 +34,44 @@ router.get("/stories", async (req: Request, res: Response) => {
     res.send(fetchedStories);
 })
 
+router.get("/storyById", async (req: Request, res: Response) => {
+    const id = req.query.id as string;
+
+    if (!id) {
+        return res.status(400).send("Missing ID parameter");
+    }
+
+    const docRef = doc(db, "story", id);
+    try {
+        const docSnap = await getDoc(docRef);
+
+        if (!docSnap.exists()) {
+            return res.status(404).send("Story not found");
+        }
+
+        const data = docSnap.data();
+        const storyData: story = {
+            id: id,
+            title: data.title,
+            synopsis: data.synopsis,
+            storyText: data.storyText,
+            creator: data.creator,
+            categories: data.categories,
+            createdAt: data.createdAt.toDate()
+        }
+        res.send(storyData);
+    } catch (error) {
+        console.error("Error getting document:", error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+
 router.post("/postStoryEntry", async (req: Request, res: Response) => {
-    let id: any = req.query.id;
-    let newStoryEntry = req.query.newStoryEntry;
+    let id: any = req.body.id;
+    let newStoryEntry = req.body.newStoryEntry;
     if (!id) { res.status(400).json({ error: "missing id" }) }
-    const docRef = doc(db, 'story', id.toString());
+    const docRef = doc(db, 'story', id);
     try {
         await updateDoc(docRef, {
             storyText: arrayUnion(newStoryEntry), // Add value to the array
@@ -55,5 +88,6 @@ router.post("/postStoryEntry", async (req: Request, res: Response) => {
      }*/} catch (errorMessage) { res.status(400).json({ error: errorMessage }) }
 
 });
+
 
 module.exports = router;

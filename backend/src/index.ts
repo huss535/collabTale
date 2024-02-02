@@ -9,6 +9,7 @@ const app: Application = express();
 const port = process.env.PORT || 8000;
 
 app.use(cors());
+app.use(express.json());
 app.use('/firestore', database);
 
 app.get("/", (req: Request, res: Response) => { res.send("Express + ts server") })
