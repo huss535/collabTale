@@ -17,9 +17,10 @@
 ### Phase 2 
 
 - Creating search and filtering features.
-- Adding in more sign in features.
+- Adding in more sign in providers.
 - Improivng on the website's styling.
 - Adding a layer of complexity to adding entries to other users' stories (i.e. Creating a voting system for new entries or the option of pending approval from the story's original creator)
+- Review website security specs , update if required.
 
 
 ## Design
