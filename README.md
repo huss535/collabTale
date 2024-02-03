@@ -1,4 +1,4 @@
-# CollabeTale (project anansi)
+# CollabTale (project anansi)
 - I hold a deep appreciation for stories and the magic they bring into our lives. My love for books has been a constant companion, and now, I'm thrilled to share a project close to my heart—a platform dedicated to collaborative storytelling. The essence of this platform revolves around the daily theme, and today's word is 'collaboration.'
 
 - In this space, storytellers can not only share their own narratives but also contribute to the evolving tales of others. It's a unique and exciting way to blend individual creativity into a collective masterpiece.
