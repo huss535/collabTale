@@ -1,7 +1,8 @@
 import React, { useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import {
-    FormControl,
+    Wrap,
+    WrapItem,
     Textarea,
     Button,
     Modal,
@@ -20,6 +21,7 @@ import {
     IconButton,
     AbsoluteCenter,
     Box,
+    CardHeader,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { story } from "../types";
@@ -46,10 +48,10 @@ function StoryDisplay() {
                 const textEntry: string = textRef.current.value.trim();
 
                 // Add new story entry
-                console.log("1.")
-                console.log(storyOpened);
-                console.log(storyOpened.id);
-                console.log(textEntry);
+                //console.log("1.")
+                //console.log(storyOpened);
+                //console.log(storyOpened.id);
+                //console.log(textEntry);
                 await axios.post(
                     import.meta.env.VITE_API + "/firestore/postStoryEntry",
                     { id: storyOpened.id, newStoryEntry: textEntry }
@@ -76,22 +78,46 @@ function StoryDisplay() {
             alert("You didn't write anything!");
         }
     };
-
+    //Generates different story entries
     const renderStoryEntries = () => {
-        return storyOpened?.storyText.map((section: string, index: number) => (
-            <div key={index}>
-                <Box position="relative">
-                    <Divider />
-                    <AbsoluteCenter bg="white" px="4">
-                        {`Entry ${index + 1}`}
-                    </AbsoluteCenter>
-                </Box>
-                <br />
-                <Text>{section}</Text>
-                <br />
-            </div>
-        ));
+        return (
+            <Wrap justify='center' style={{ width: "70%" }}>
+                {storyOpened?.storyText.map((section: string, index: number) => (
+
+                    <WrapItem key={index}>
+                        <Card
+                            key={index}
+                            style={{
+                                border: "solid",
+                                borderWidth: "3px",
+                                borderRadius: "12px",
+                                borderColor: "#B68D40",
+                            }}
+                        >
+                            <CardHeader>
+                                <AbsoluteCenter bg="white" px="4">
+                                    {`Entry ${index + 1}`}
+                                </AbsoluteCenter>
+                            </CardHeader>
+                            <CardBody>
+
+                                <br />
+                                <br />
+                                <Text>{section}</Text>
+                            </CardBody>
+
+                        </Card>
+
+                    </WrapItem>
+
+
+                ))}
+
+            </Wrap>
+
+        );
     };
+
 
     return (
         <div
@@ -112,28 +138,17 @@ function StoryDisplay() {
                             Created by: {storyOpened.creator}
                         </Heading>
                     </Heading>
-                    <Card
-                        style={{
-                            border: "solid",
-                            borderWidth: "3px",
-                            width: "450px",
-                            borderRadius: "12px",
-                            borderColor: "#B68D40",
-                        }}
-                    >
-                        <CardBody>{renderStoryEntries()}</CardBody>
-                        <Divider />
-                        <CardFooter>
-                            <IconButton
-                                aria-label="Add entry for story"
-                                icon={<AddIcon />}
-                                onClick={onOpen}
-                                colorScheme="yellow"
-                                variant="outline"
-                                _hover={{ borderColor: "#d9c193" }}
-                            />
-                        </CardFooter>
-                    </Card>
+
+                    {renderStoryEntries()}
+
+                    <IconButton
+                        aria-label="Add entry for story"
+                        icon={<AddIcon />}
+                        onClick={onOpen}
+                        colorScheme="yellow"
+                        variant="outline"
+                        _hover={{ borderColor: "#d9c193" }}
+                    />
                     <Modal onClose={onClose} size="full" isOpen={isOpen}>
                         <ModalContent>
                             <ModalHeader alignSelf="center">Add a new Entry</ModalHeader>

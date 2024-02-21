@@ -18,7 +18,7 @@ function Home() {
                 <div>
                     <Stack direction='column' spacing={20} align='center'>
                         <Button>Login</Button>
-                        <Button>Sign up</Button>
+                        <Button onClick={() => { navigate("/SignUp") }}>Sign up</Button>
                     </Stack>
                 </div>
                 <div>
