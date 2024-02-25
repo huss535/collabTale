@@ -99,7 +99,8 @@ function SignUp() {
                     });
                     signInWithEmailAndPassword(auth, formData.email, formData.password).then((userCredential) => {
                         console.log("Signed in");
-                        navigate("/UserInfo");
+                        const uid: string = userCredential.user.uid;
+                        navigate("/UserInfo", { state: uid });
 
                     }).catch((error) => { console.log(error); })
 

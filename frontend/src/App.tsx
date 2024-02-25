@@ -5,6 +5,7 @@ import GuestPage from './pages/GuestPage'
 import StoryDisplay from './pages/StoryDisplay'
 import SignUp from './pages/SignUp'
 import UserInfo from './pages/UserInfo'
+import ProfilePage from './pages/ProfilePage'
 function App() {
 
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/DisplayStory" element={<StoryDisplay />} />
           <Route path='/SignUp' element={<SignUp />} />
           <Route path='/UserInfo' element={<UserInfo />} />
+          <Route path='/ProfilePage' element={<ProfilePage />} />
         </Routes>
       </BrowserRouter>
     </>

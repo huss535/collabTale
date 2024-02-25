@@ -10,10 +10,11 @@ router.get("/", (req: Request, res: Response) => {
     res.send("serveer working");
 })
 router.post("/newUser", async (req: Request, res: Response) => {
-    const { uId, firstName, lastName, dateOfBirth } = req.body;
+    const { uId, firstName, lastName, username, dateOfBirth } = req.body;
     const data = {
         firstName: firstName,
         lastName: lastName,
+        username: username,
         dateOfBirth: dateOfBirth
 
     }

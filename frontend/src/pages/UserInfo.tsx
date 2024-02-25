@@ -1,42 +1,65 @@
 import { FormControl, FormLabel, Input, Box, Button, FormErrorMessage } from "@chakra-ui/react";
-import { getAuth } from "firebase/auth";
-import { useState } from "react";
+import axios from "axios";
+import { getAuth, updateProfile } from "firebase/auth";
+import { MouseEventHandler, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 interface userInfo {
     firstName: string;
     lastName: string;
-    dateOfBirth: Date;
+    username: string;
+    dateOfBirth: string;
 }
 function UserInfo() {
-
+    const location = useLocation();
+    const uid = location.state;
+    console.log(uid);
     const [userInfo, setUserInfo] = useState<userInfo>({
         firstName: '',
         lastName: '',
-        dateOfBirth: new Date(),
+        username: '',
+        dateOfBirth: '',
     })
 
     const auth = getAuth();
     const user = auth.currentUser;
 
-    if (user) {
-        //  console.log(user);
-    } else {
-        // No user is signed in.
-    }
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+    const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
 
 
-        setUserInfo((prevData) => ({
+        await setUserInfo((prevData) => ({
             ...prevData,
             [name]: value,
         }));
-
+        console.log(userInfo);
 
 
 
     };
+
+    const handleSubmission: MouseEventHandler<HTMLButtonElement> = async (e) => {
+        if (user) {
+            const userData = {
+                uId: uid,
+                firstName: userInfo.firstName,
+                lastName: userInfo.lastName,
+                username: userInfo.username,
+                dateOfBirth: userInfo.dateOfBirth
+
+            };
+            await axios.post(import.meta.env.VITE_API + "/user/newUser", userData).then((response) => {
+                console.log(response.data);
+            }).catch((error: Error) => {
+                console.log(error.message);
+            })
+
+        }
+        else { console.log("Not authenticated") }
+
+    }
 
     return (<>
         <Box style={{ backgroundColor: '#FFFFE4', marginTop: 50 }}>
@@ -50,6 +73,10 @@ function UserInfo() {
                     <Input variant='filled' name="lastName" onChange={handleChange} />
                 </div>
 
+                <div style={{ width: '300px' }}>
+                    <FormLabel>Username</FormLabel>
+                    <Input variant='filled' name="username" onChange={handleChange} />
+                </div>
 
 
                 <div style={{ width: '300px' }}>
@@ -57,7 +84,7 @@ function UserInfo() {
                     <Input variant='filled' type="date" name="dateOfBirth" onChange={handleChange} />
 
                 </div>
-                <Button >Next</Button>
+                <Button onClick={handleSubmission} >Next</Button>
             </FormControl>
         </Box>
     </>);
