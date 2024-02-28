@@ -1,5 +1,5 @@
 import { Heading, Text, Link, Button, Stack } from "@chakra-ui/react";
-import backgroundImage from "../assets/old-books-4937812_1280.jpg";
+import backgroundImage from "../assets/notepad-1130743_1280.jpeg";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
@@ -8,7 +8,7 @@ function Home() {
         <div style={{ flexDirection: 'row', display: "flex", alignItems: 'center', position: "absolute", width: '100%', height: '100%' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '60px', textAlign: 'center', width: '100%', height: '100%' }}>
                 <div>
-                    <Heading as='h1'>Project Anansi</Heading>
+                    <Heading padding="10px" as='h1' size="3xl">Collab Tale</Heading>
                 </div>
                 <div>
                     <Text whiteSpace="pre-line">

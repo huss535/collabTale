@@ -3,7 +3,7 @@ import { MouseEventHandler, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { getAuth, createUserWithEmailAndPassword, Auth, signInWithEmailAndPassword } from "firebase/auth";
-import { FirebaseApp, initializeApp } from "firebase/app";
+import { auth } from "../Firebase";
 
 interface FormData {
     email: string;
@@ -83,14 +83,14 @@ function SignUp() {
             try {
                 // const firebaseApp: FirebaseApp = await getFirebaseApp();
                 // const auth = await getAuth(firebaseApp);
-                const firebaseApp: FirebaseApp = await getFirebaseApp();
-                const auth: Auth = getAuth(firebaseApp);
+                //const firebaseApp: FirebaseApp = await getFirebaseApp();
+                //const auth: Auth = getAuth(firebaseApp);
 
                 await createUserWithEmailAndPassword(auth, formData.email, formData.password).then((userCredential) => {
                     toast({
 
-                        title: ':)',
-                        description: "Account created successfuly",
+                        title: 'Account created',
+                        description: "Your account has been created.",
                         status: 'success',
                         isClosable: true,
                         position: 'top'
@@ -141,11 +141,6 @@ function SignUp() {
 
     };
 
-    const getFirebaseApp = async () => {
-        const response = await axios.get(import.meta.env.VITE_API + "/firebaseConfig");
-        const firebaseApp: FirebaseApp = initializeApp(response.data);
-        return firebaseApp;
-    };
 
 
 
