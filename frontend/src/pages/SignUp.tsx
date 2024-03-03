@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { getAuth, createUserWithEmailAndPassword, Auth, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../Firebase";
-
+import { useInfo } from "../context/UserInfoContextProvider";
 interface FormData {
     email: string;
     confirmedEmail: string;
@@ -20,6 +20,7 @@ interface FormErrors {
 }
 
 function SignUp() {
+    const { setUId } = useInfo();
     const navigate = useNavigate();
     const toast = useToast();
     const [formData, setFormData] = useState<FormData>({
@@ -100,7 +101,8 @@ function SignUp() {
                     signInWithEmailAndPassword(auth, formData.email, formData.password).then((userCredential) => {
                         console.log("Signed in");
                         const uid: string = userCredential.user.uid;
-                        navigate("/UserInfo", { state: uid });
+                        setUId(uid);
+                        navigate("/UserInfo");
 
                     }).catch((error) => { console.log(error); })
 

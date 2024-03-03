@@ -1,5 +1,5 @@
 import { HStack, Tag, TagLabel } from "@chakra-ui/react";
-
+//Component used to display different story categories
 function DisplayTag({ categories }: { categories: string[] }) {
     return (<HStack spacing={4}>
 

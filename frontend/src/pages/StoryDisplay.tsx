@@ -16,11 +16,10 @@ import {
     Card,
     CardBody,
     Text,
-    CardFooter,
-    Divider,
+
     IconButton,
     AbsoluteCenter,
-    Box,
+
     CardHeader,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";

@@ -8,6 +8,8 @@ import UserInfo from './pages/UserInfo'
 import ProfilePage from './pages/ProfilePage'
 import PrivateRoute from './components/PrivateRoute'
 import LoginPage from './pages/LoginPage'
+import ProfileInfo from './pages/ProfileInfo'
+import { UserInfoContextProvider } from './context/UserInfoContextProvider'
 
 function App() {
   return (
@@ -17,10 +19,10 @@ function App() {
         <Route path="/GuestPage" element={<GuestPage />} />
         <Route path="/DisplayStory" element={<StoryDisplay />} />
         <Route path='/Login' element={<LoginPage />} />
+
         <Route path='/SignUp' element={<SignUp />} />
         <Route path='/UserInfo' element={<UserInfo />} />
-
-        {/* This is where you should use PrivateRoute */}
+        <Route path='/ProfileInfo' element={<ProfileInfo />} />
         <Route path='/profile' element={<PrivateRoute component={ProfilePage} />} />
 
 

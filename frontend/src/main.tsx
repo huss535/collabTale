@@ -4,6 +4,7 @@ import App from './App.tsx'
 import './index.css'
 import { ChakraProvider } from '@chakra-ui/react'
 import { AuthContextProvider } from './context/AuthContextProvider'
+import { UserInfoContextProvider } from './context/UserInfoContextProvider'
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -11,7 +12,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 
     <ChakraProvider>
       <AuthContextProvider>
-        <App />
+        <UserInfoContextProvider>
+          <App />
+        </UserInfoContextProvider>
       </AuthContextProvider>
     </ChakraProvider>
 

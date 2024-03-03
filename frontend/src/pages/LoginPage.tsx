@@ -16,7 +16,6 @@ interface FormErrors {
 function LoginPage() {
     const navigate = useNavigate();
     const toast = useToast();
-    const [errors, setErrors] = useState<FormErrors>({});
     const [formData, setFormData] = useState<FormData>({
         email: '',
         password: ''
@@ -39,54 +38,78 @@ function LoginPage() {
     const handleSubmission: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
         e.preventDefault();
 
-
-
+        let newErrors: FormErrors = {};
         if (!formData.email || !formData.password) {
-            setErrors((prevData) => ({
-                ...prevData,
-                allFields: "Please fill in all fields"
-            }));
+            newErrors = { ...newErrors, allFields: "Please fill in all fields" };
 
+
+
+        }
+        else {
+            newErrors = { ...newErrors, allFields: "" };
+
+            if (!validateEmail(formData.email)) {
+
+                console.log("email invalid");
+                newErrors = { ...newErrors, emailFormat: "Invalid email format" };
+
+
+            } else {
+
+                newErrors = { ...newErrors, emailFormat: "" };
+
+            }
         }
 
 
-        if (!validateEmail(formData.email)) {
 
-            setErrors((prevData) => ({
-                ...prevData,
-                emailFormat: 'Invalid email format'
-            }));
+        if (!Object.values(newErrors).every(value => value === '')) {
+
+            if (newErrors.allFields != '') {
+                toast({
+
+                    title: 'Error signing up',
+                    description: newErrors.allFields,
+                    status: 'error',
+                    isClosable: true,
+                    position: 'top'
+
+
+                });
+
+            } else {
+
+                toast({
+
+                    title: 'Error signing up',
+                    description: newErrors.emailFormat,
+                    status: 'error',
+                    isClosable: true,
+                    position: 'top'
+
+
+                });
+
+            }
 
         } else {
-            setErrors((prevErrors) => ({
-                ...prevErrors,
-                emailFormat: '',
-            }));
-        }
-
-
-
-        if (Object.keys(errors).length === 0) {
             try {
-                // const firebaseApp: FirebaseApp = await getFirebaseApp();
-                // const auth = await getAuth(firebaseApp);
-                //const firebaseApp: FirebaseApp = await getFirebaseApp();
-                //const auth: Auth = getAuth(firebaseApp);
+
                 await signInWithEmailAndPassword(auth, formData.email, formData.password).then((userCredential) => {
-                    console.log("Signed in");
                     const uid: string = userCredential.user.uid;
                     navigate("/profile", { state: uid });
 
                 }).catch((error) => {
-                    let errorMessage: string = "";
+                    console.log(error);
+
+                    let errorMessage: string = "An error occurred. Please try again later.";
                     if (error.code === "auth/email-already-in-use") {
                         errorMessage = "This email is associated with an account.";
-                    } else if (error.code === "auth/weak-password") {
-                        errorMessage = "Please choose a stronger password with at least 6 characters.";
-                    } else {
-                        // Handle other error cases with a general error message
-                        errorMessage = "An error occurred. Please try again later.";
                     }
+                    else if (error.code = "auth/invalid-credential") {
+                        errorMessage = "Your account doesn't exist."
+                    }
+                    console.log(error);
                     toast({
 
                         title: 'Error signing up',
@@ -102,34 +125,8 @@ function LoginPage() {
                 });
             }
             catch (error) { console.log(error); }
-        } else {
-
-            if (errors.allFields != '') {
-                toast({
-
-                    title: 'Error signing up',
-                    description: errors.allFields,
-                    status: 'error',
-                    isClosable: true,
-                    position: 'top'
 
 
-                });
-
-            } else {
-
-                toast({
-
-                    title: 'Error signing up',
-                    description: errors.emailFormat,
-                    status: 'error',
-                    isClosable: true,
-                    position: 'top'
-
-
-                });
-
-            }
 
         }
 
