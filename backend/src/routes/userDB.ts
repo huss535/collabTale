@@ -5,6 +5,28 @@ import { user } from "../models/user";
 import { bucket } from '../firebase'
 const router = express.Router();
 
+export async function getUserData(uId: string) {
+    try {
+        console.log("Checking");
+        const doc = await db.collection("user").doc(uId).get();
+        if (doc.exists) {
+            const userData: user = doc.data() as user;
+            const { firstName, lastName } = userData;
+            console.log("First Name:", firstName);
+            console.log("Last Name:", lastName);
+            return { firstName, lastName };
+        } else {
+            console.log("No such document!");
+            return null;
+        }
+    } catch (error) {
+        console.error("Error getting document:", error);
+        return null;
+    }
+}
+
+
+
 const retrieveImage = async (uId: string) => {
     try {
         const storageRef = bucket.file(`images/${uId}`);

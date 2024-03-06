@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Card, CardHeader, CardBody, CardFooter, Heading, Text, Divider, SimpleGrid, Button, Stack } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import { Card, CardHeader, CardBody, CardFooter, Heading, Text, Divider, SimpleGrid, Button, Stack, Flex } from '@chakra-ui/react';
 import { story } from '../types'; // Assuming you have a 'types' file with the story type defined
 import DisplayTag from '../components/DisplayTag';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Navbar from '../components/Navbar';
 import 'firebase/firestore'; // Not sure if this import is necessary here
+import './CardsStyle.css'
 
 function GuestPage() {
     const [stories, setStories] = useState<story[]>([]);
@@ -30,47 +32,48 @@ function GuestPage() {
         navigate('/DisplayStory', { state: { storyOpened } });
     };
 
-    return (
-        <div style={{
-            backgroundColor: '#FFFFE4',
-            display: 'flex',
-            height: '100vh',
-            justifyContent: 'center',
-            alignItems: 'center',
-            boxSizing: 'border-box',
-        }}>
-            <SimpleGrid columns={1} spacing={18}>
-                {stories.map((story) => (
-                    <Card key={story.id} style={{ // Assuming each story has a unique 'id'
-                        border: 'solid',
-                        borderWidth: '3px',
-                        width: '450px',
-                        borderRadius: '12px',
-                        borderColor: "#B68D40"
-                    }} boxShadow='xl'>
-                        <CardHeader color="#B68D40" textAlign='center'>
-                            <Heading>{story.title}</Heading>
-                        </CardHeader>
-                        <Divider />
-                        <Stack spacing={5} align='center'>
-                            <CardBody textAlign='center'>
-                                <Text>{story.synopsis}</Text>
-                            </CardBody>
-                            <DisplayTag categories={story.categories} />
-                        </Stack>
-                        <CardFooter style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }} textAlign='center'>
-                            <Text>Written by: <br /> {story.creator} </Text>
-                            <Button
-                                onClick={() => { handleButtonClick(story) }}
-                                colorScheme='yellow'
-                                variant='outline'
-                                _hover={{ borderColor: "#d9c193" }}
-                            >Explore</Button>
-                        </CardFooter>
-                    </Card>
-                ))}
-            </SimpleGrid>
-        </div>
+    return (<Flex>
+
+        <Navbar />
+        <Flex pb='50px'
+            ml={{ base: '95px', lg: '200px' }} // Adjust margin based on screen size
+            className='inner-container'
+        >
+            {stories.map((story) => (
+                <Card key={story.id}
+                    className='card-styling'
+                    boxShadow='xl'>
+                    <CardHeader
+                        className="card-header"
+                        textAlign='center'
+                    >
+                        <Heading
+                            fontSize={['20px', '30px', '40px']}
+
+                        >
+                            {story.title}
+                        </Heading>
+                    </CardHeader>
+                    <Divider />
+                    <Stack spacing={5} align='center'>
+                        <CardBody textAlign='center'>
+                            <Text>{story.synopsis}</Text>
+                        </CardBody>
+                        <DisplayTag categories={story.categories} />
+                    </Stack>
+                    <CardFooter style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }} textAlign='center'>
+                        <Text>Written by: <br /> {story.creator} </Text>
+                        <Button
+                            onClick={() => { handleButtonClick(story) }}
+                            colorScheme='yellow'
+                            variant='outline'
+                            _hover={{ borderColor: "#d9c193" }}
+                        >Explore</Button>
+                    </CardFooter>
+                </Card>
+            ))}
+        </Flex>
+    </Flex>
     );
 }
 

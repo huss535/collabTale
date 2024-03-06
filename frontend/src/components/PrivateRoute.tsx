@@ -5,23 +5,15 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/AuthContextProvider";
 import { Spinner } from "@chakra-ui/react";
 
+
 export default function PrivateRoute({ component: Component, ...rest }: any) {
   const user = useAuth();
-  const loading = useAuth();
+  const isLoading = user === null; // Check if authentication status is still loading
 
-  if (loading) {
-
-    return <Spinner />
+  if (isLoading) {
+    // Render loading indicator if authentication status is still loading
+    return <Spinner />;
   }
-
 
   return user ? <Component {...rest} /> : <Navigate to="/" replace />;
 }
-
-/*onAuthStateChanged(auth, (user) => {
-   if (user) { setAuthenticated(true); }
-   else { setAuthenticated(false); }
-
- });
-
- alert(authenticated);*/

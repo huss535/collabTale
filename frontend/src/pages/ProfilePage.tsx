@@ -1,62 +1,84 @@
-import { Button, Flex, Heading, Card, CardBody, CardHeader, Avatar, Text } from "@chakra-ui/react";
-import { useRef } from "react";
-import { useLayoutEffect } from "react";
+import { Button, Flex, Heading, Card, CardBody, CardHeader, Avatar, Text, Spinner, Link } from "@chakra-ui/react";
+import axios from "axios";
+import { user } from '../types';
+import { useEffect, useState } from "react";
+import Navbar from "../components/Navbar";
+import "./CardsStyle.css"
+
 function ProfilePage() {
+    const uId: string | null = localStorage.getItem('userId');
+    const [userData, setUserData] = useState<user | null>(null); // State to store user data
+
+    useEffect(() => {
+        const fetchUserData = async (uId: string) => {
+            try {
+                const response = await axios.get(import.meta.env.VITE_API + "/user/getUserById", { params: { uId: uId } });
+                if (response.status !== 200) {
+                    throw new Error("Error processing your information");
+                } else {
+                    return response.data;
+                }
+            } catch (error) {
+                alert(error);
+                return null;
+            }
+        };
+
+        if (uId) {
+            fetchUserData(uId)
+                .then(data => setUserData(data))
+                .catch(error => console.error(error));
+        }
+    }, [uId]); // Fetch user data whenever uId changes
+
+    if (!userData) {
+        return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh' }}>
+            <Spinner />
+        </div>
+            ;
+    }
 
     return (
 
         <Flex>
-            <Flex
-                direction={'column'}
-                justify={'space-between'}
-                style={{ backgroundColor: '#B68D40', width: '17%', height: '100vh' }}
-            >
-                <div style={{ textAlign: 'center', padding: '10px' }}>
-                    <Heading size='md'>Collab Tale</Heading>
-                </div>
-                <Button _hover={{ borderColor: "#B68D40" }} style={{ backgroundColor: 'inherit', borderRadius: '0' }} >Home</Button>
-                <Button style={{ backgroundColor: 'inherit' }} >Profile</Button>
-                <Button style={{ backgroundColor: 'inherit' }} >Genres</Button>
-                <Button style={{ backgroundColor: 'inherit' }} >Add Story</Button>
-                <Button style={{ backgroundColor: 'inherit' }} >Log out</Button>
+            <Navbar />
 
-
-            </Flex>
-
-            <Flex style={{ flexDirection: 'column', gap: '60px', alignItems: 'center', width: '100%' }}>
+            <Flex style={{
+                flexDirection: 'column',
+                gap: '60px',
+                alignItems: 'center',
+                width: "100%",
+                paddingTop: '20px',
+            }}>
 
                 <Card style={{ flexDirection: "row", justifyContent: 'flex-start', width: '80%', height: '150px', gap: "30%", padding: "25px", margin: '20px' }}>
-                    <Avatar size="xl" name='Dan Abrahmov' src='https://bit.ly/dan-abramov' />
-                    <div style={{ width: '70%', maxHeight: '130px' }}>
-                        <Heading as="h1" fontSize={['20px', '30px', '40px']}>Eric shulz</Heading>
-                        <Heading as="h2" fontSize={['13px', '15px', '25px']} >Eric shulz</Heading>
+                    <Avatar size="xl" name='Dan Abrahmov' src={userData.profileImage} style={{ border: "solid", borderColor: '#B68D40' }} />
+                    <div style={{ maxHeight: '130px', paddingInlineEnd: "100px" }}>
+                        <Heading as="h1" fontSize={['20px', '30px', '40px']}>{userData.firstName + " " + userData.lastName}</Heading>
+                        <Heading as="h2" fontSize={['13px', '15px', '25px']}  >{userData.username}</Heading>
                     </div>
 
                 </Card>
 
-                <Card style={{ flexDirection: 'column', width: '80%', textAlign: 'center' }}>
-                    <CardHeader style={{
-                        backgroundColor: '#B68D40',
-                        borderTopLeftRadius: 10,
-                        borderTopRightRadius: 10,
-
-                    }}>
+                <Card className="card-styling">
+                    <CardHeader className="card-header">
                         <Heading as='h3' size="md" >Bio</Heading>
                     </CardHeader>
                     <CardBody >
-                        <Text style={{ overflowY: 'auto' }} >"I want readers to know I'm a real person with a story," she explains when asked about her bio. "If I have similar hobbies and interests as them, I may have the same concerns, too. So, they'll know I'm just as invested in these topics as they are."</Text>
+                        <Text style={{ overflowY: 'auto' }} >{userData.bio}</Text>
                     </CardBody>
                 </Card>
 
 
 
-                <Flex style={{ flexDirection: 'row', justifyContent: 'space-between', width: '70%' }}>
+                <Flex style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'space-around', gap: "20px", width: '70%', flexWrap: 'wrap' }}>
                     <Button>Your Activity</Button>
                     <Button>Favourite Stories</Button>
                     <Button>Edit Profile</Button>
 
                 </Flex>
             </Flex>
+
 
         </Flex>
 
