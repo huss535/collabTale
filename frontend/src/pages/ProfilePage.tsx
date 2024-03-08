@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, Card, CardBody, CardHeader, Avatar, Text, Spinner, Link } from "@chakra-ui/react";
+import { Button, Flex, Heading, Card, CardBody, CardHeader, Avatar, Text, Spinner, Link, Divider } from "@chakra-ui/react";
 import axios from "axios";
 import { user } from '../types';
 import { useEffect, useState } from "react";
@@ -8,6 +8,7 @@ import "./CardsStyle.css"
 function ProfilePage() {
     const uId: string | null = localStorage.getItem('userId');
     const [userData, setUserData] = useState<user | null>(null); // State to store user data
+    const fullName: string = userData?.firstName + " " + userData?.lastName;
 
     useEffect(() => {
         const fetchUserData = async (uId: string) => {
@@ -43,27 +44,29 @@ function ProfilePage() {
         <Flex>
             <Navbar />
 
-            <Flex style={{
-                flexDirection: 'column',
-                gap: '60px',
-                alignItems: 'center',
-                width: "100%",
-                paddingTop: '20px',
-            }}>
+            <Flex
+                pb='50px'
+                ml={{ base: '100px', lg: '200px' }}
+                className="inner-container"
+            >
 
-                <Card style={{ flexDirection: "row", justifyContent: 'flex-start', width: '80%', height: '150px', gap: "30%", padding: "25px", margin: '20px' }}>
-                    <Avatar size="xl" name='Dan Abrahmov' src={userData.profileImage} style={{ border: "solid", borderColor: '#B68D40' }} />
-                    <div style={{ maxHeight: '130px', paddingInlineEnd: "100px" }}>
+                <Card className="card-styling">
+                    <CardHeader>
+                        <Avatar size="2xl" name={fullName} src={userData.profileImage} style={{ border: "solid", borderColor: '#B68D40' }} />
+                    </CardHeader>
+                    <Divider />
+
+                    <CardBody>
                         <Heading as="h1" fontSize={['20px', '30px', '40px']}>{userData.firstName + " " + userData.lastName}</Heading>
                         <Heading as="h2" fontSize={['13px', '15px', '25px']}  >{userData.username}</Heading>
-                    </div>
-
+                    </CardBody>
                 </Card>
 
                 <Card className="card-styling">
                     <CardHeader className="card-header">
                         <Heading as='h3' size="md" >Bio</Heading>
                     </CardHeader>
+                    <Divider />
                     <CardBody >
                         <Text style={{ overflowY: 'auto' }} >{userData.bio}</Text>
                     </CardBody>

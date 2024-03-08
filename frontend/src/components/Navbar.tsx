@@ -1,7 +1,13 @@
 import { Flex, Heading, Link } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContextProvider";
 function Navbar() {
+    const { signOut } = useAuth();
     const navigate = useNavigate();
+    const linkStyle = {
+        transition: "transform 0.3s ease-in-out",
+        textDecoration: "none"
+    };
     return (<Flex
         direction={'column'}
         style={{
@@ -19,11 +25,10 @@ function Navbar() {
             <Heading size='md'>Collab Tale</Heading>
         </div>
 
-        <Link onClick={() => { navigate("/GuestPage") }}>Home</Link>
-        <Link onClick={() => { navigate("/profile") }} >Profile</Link>
-        <Link >Genres</Link>
-        <Link  >Add Story</Link>
-        <Link style={{ marginBottom: '50px' }}  >Log out</Link>
+        <Link _hover={{ transform: "scale(1.1)" }} onClick={() => navigate("/GuestPage")}>Home</Link>
+        <Link _hover={{ transform: "scale(1.1)" }} style={linkStyle} onClick={() => { navigate("/profile") }} >Profile</Link>
+        <Link _hover={{ transform: "scale(1.1)" }} style={linkStyle} onClick={() => { navigate("/addStory") }}  >Add Story</Link>
+        <Link _hover={{ transform: "scale(1.1)" }} style={linkStyle} onClick={signOut}   >Log out</Link>
 
 
     </Flex>

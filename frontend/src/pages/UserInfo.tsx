@@ -72,9 +72,10 @@ function UserInfo() {
         <div style={{ height: '100vh', backgroundColor: '#FFFFE4', marginTop: '100px' }}>
             <Card style={{ margin: 'auto', alignContent: 'center', width: '60vw', borderRadius: '10px' }}>
 
-                <CardHeader style={{ backgroundColor: "#B68D40", borderTopLeftRadius: "10px", borderTopRightRadius: "10px" }}>
+                <CardHeader >
                     <Heading textAlign="center" as="h1" size='xl'>User Info</Heading>
                 </CardHeader>
+                <Divider />
                 <CardBody>
                     <FormControl style={{ height: '500px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between' }}>
                         <div >

@@ -59,14 +59,13 @@ function GuestPage() {
                         <CardBody textAlign='center'>
                             <Text>{story.synopsis}</Text>
                         </CardBody>
-                        <DisplayTag categories={story.categories} />
+                        <DisplayTag genres={story.genres} />
                     </Stack>
                     <CardFooter style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }} textAlign='center'>
                         <Text>Written by: <br /> {story.creator} </Text>
                         <Button
                             onClick={() => { handleButtonClick(story) }}
-                            colorScheme='yellow'
-                            variant='outline'
+
                             _hover={{ borderColor: "#d9c193" }}
                         >Explore</Button>
                     </CardFooter>

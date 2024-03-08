@@ -1,7 +1,9 @@
 import Navbar from "../components/Navbar";
 import { Button, Card, CardBody, CardHeader, Checkbox, CheckboxGroup, Divider, Flex, FormControl, FormLabel, HStack, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Spacer, Stack, Textarea, VStack, useDisclosure } from "@chakra-ui/react";
 import './CardsStyle.css'
-import { useRef, useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 interface NewStoryEntry {
     title: string;
@@ -57,7 +59,7 @@ const MultiSelectModal: React.FC<MultiSelectModalProps> = ({ isOpen, onClose, op
                     </Stack>
                 </ModalBody>
                 <ModalFooter>
-                    <Button colorScheme="blue" mr={3} onClick={handleConfirm}>
+                    <Button mr={3} onClick={handleConfirm}>
                         Confirm
                     </Button>
                     <Button variant="ghost" onClick={onClose}>
@@ -69,12 +71,12 @@ const MultiSelectModal: React.FC<MultiSelectModalProps> = ({ isOpen, onClose, op
     );
 };
 function AddStory() {
-
+    const navigate = useNavigate();
     const [isOpen1, setIsOpen1] = useState(false);
     const { isOpen, onOpen, onClose } = useDisclosure();
-
-
-    const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+    const uId = localStorage.getItem("userId");
+    //console.log(uId);
+    //const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
     const [newEntry, setEntry] = useState<NewStoryEntry>({
         title: "",
         synopsis: "",
@@ -97,7 +99,7 @@ function AddStory() {
             genres: selectedItems,
         }));
     };
-    const options = ['action', 'drama', 'thriller', 'fantasy', 'science ficiton', 'mystery', 'adventure', 'young adult'];
+    const options = ['action', 'drama', 'thriller', 'horror', 'fantasy', 'science ficiton', 'mystery', 'adventure', 'young adult'];
 
 
 
@@ -112,8 +114,33 @@ function AddStory() {
         }));
     };
 
-    const handleSubmission = () => {
-        console.log(newEntry);
+    const handleSubmission = async () => {
+        if (newEntry.title === "" || newEntry.synopsis === "" || newEntry.genres.length === 0 || newEntry.firstEntry === "") {
+            alert("Please full all sections");
+
+        }
+
+        else {
+
+            const requestBody = {
+                uId: uId,
+                title: newEntry.title,
+                synopsis: newEntry.synopsis,
+                genres: newEntry.genres,
+                firstEntry: newEntry.firstEntry
+
+            };
+            try {
+                const response = await axios.post(import.meta.env.VITE_API + "/firestore/createNewStory", requestBody);
+
+                console.log(response);
+                navigate("/GuestPage");
+            } catch (error) {
+
+                console.log(error);
+            }
+        }
+
     }
 
     return (
@@ -141,7 +168,8 @@ function AddStory() {
                                 </div>
                                 <div >
                                     <FormLabel>Synopsis</FormLabel>
-                                    <Input variant='filled' name="synopsis" onChange={handleChange} />
+
+                                    <Textarea variant='filled' name="synopsis" onChange={handleChange} style={{ resize: 'none' }} />
                                 </div>
 
 
@@ -160,19 +188,22 @@ function AddStory() {
                                             <ModalHeader alignSelf="center">Add a new Entry</ModalHeader>
                                             <ModalCloseButton />
 
-                                            <ModalBody>
-                                                <form>
-                                                    <Textarea
-                                                        placeholder="Add to the story"
-                                                        size="lg"
-                                                        resize="vertical"
-                                                        name="firstEntry"
-                                                        onChange={handleChange}
-                                                    />
-                                                    <br />
-                                                    <br />
+                                            <ModalBody style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 
-                                                </form>
+                                                <Textarea
+                                                    placeholder="Add to the story"
+                                                    resize="vertical"
+                                                    name="firstEntry"
+                                                    onChange={handleChange}
+                                                    style={{ height: '350px' }}
+                                                />
+                                                <br />
+                                                <br />
+                                                <Button onClick={onClose}>
+                                                    Confirm
+                                                </Button>
+
+
                                             </ModalBody>
                                             <ModalFooter></ModalFooter>
                                         </ModalContent>

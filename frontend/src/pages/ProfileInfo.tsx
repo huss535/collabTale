@@ -2,6 +2,7 @@ import { Box, Button, Card, FormControl, FormLabel, Input, Textarea, CardBody, C
 import { useRef, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { ref } from 'firebase/storage';
+import './CardsStyle.css'
 import axios from "axios";
 
 function ProfileInfo() {
@@ -12,17 +13,6 @@ function ProfileInfo() {
     const [bio, setBio] = useState("");
 
     let userData = state;
-    console.log(state);
-    useEffect(() => {
-        console.log('image data', imageData);
-    }, [imageData]);
-
-    useEffect(() => {
-        console.log('bio', bio);
-    }, [bio]);
-    useEffect(() => {
-        console.log("username", userName);
-    }, [userName]);
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -84,9 +74,10 @@ function ProfileInfo() {
     return (
         <div style={{ height: '100vh', backgroundColor: '#FFFFE4', marginTop: '100px' }}>
             <Card style={{ margin: 'auto', alignContent: 'center', width: '60vw', borderRadius: '10px' }}>
-                <CardHeader style={{ backgroundColor: "#B68D40", borderTopLeftRadius: "10px", borderTopRightRadius: "10px" }}>
+                <CardHeader >
                     <Heading textAlign="center" as="h1" size='xl'>Profile info</Heading>
                 </CardHeader>
+                <Divider />
                 <CardBody>
                     <FormControl style={{ height: '500px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between' }}>
 

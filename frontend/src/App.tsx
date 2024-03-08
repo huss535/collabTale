@@ -25,7 +25,8 @@ function App() {
           <Route path='/UserInfo' element={<UserInfo />} />
           <Route path='/ProfileInfo' element={<ProfileInfo />} />
           <Route path='/profile' element={<PrivateRoute component={ProfilePage} />} />
-          <Route path="/addStory" element={<AddStory />} />
+          <Route path='/addStory' element={<PrivateRoute component={AddStory} />} />
+
 
         </Routes>
       </BrowserRouter>

@@ -4,7 +4,7 @@ export interface story {
     synopsis: string;
     storyText: string[];
     creator: string;
-    categories: string[];
+    genres: string[];
     createdAt: Date
 }
 

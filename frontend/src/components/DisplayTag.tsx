@@ -1,9 +1,9 @@
 import { HStack, Tag, TagLabel } from "@chakra-ui/react";
 //Component used to display different story categories
-function DisplayTag({ categories }: { categories: string[] }) {
+function DisplayTag({ genres }: { genres: string[] }) {
     return (<HStack spacing={4}>
 
-        {categories.map((category: string) => {
+        {genres.map((category: string) => {
             return (<Tag key={category} variant='subtle' colorScheme="yellow"><TagLabel key={category}>{category}</TagLabel></Tag>);
 
         })}

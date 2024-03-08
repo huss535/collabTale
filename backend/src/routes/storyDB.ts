@@ -42,7 +42,7 @@ router.get("/stories", async (req: Request, res: Response) => {
             synopsis: data.synopsis,
             storyText: data.storyText,
             creator: data.creator,
-            categories: data.categories,
+            genres: data.genres,
             createdAt: data.createdAt.toDate()
 
 
@@ -83,7 +83,7 @@ router.get("/storyById", async (req: Request, res: Response) => {
             synopsis: data.synopsis,
             storyText: data.storyText,
             creator: data.creator,
-            categories: data.categories,
+            genres: data.genres,
             createdAt: data.createdAt.toDate()
         };
 

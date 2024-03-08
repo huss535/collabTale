@@ -1,8 +1,11 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { auth } from "../Firebase";
 
 // Define the AuthContext
 const AuthContext = createContext<any>(null);
+
+
 
 // Define the AuthContextProvider component
 export const AuthContextProvider = ({ children }: any) => {
@@ -11,6 +14,15 @@ export const AuthContextProvider = ({ children }: any) => {
         return localStorage.getItem('userId');
     });
     const [loading, setLoading] = useState(true);
+    const signOut = () => {
+
+        auth.signOut().then(() => {
+
+            console.log("Logged out");
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
 
     useEffect(() => {
         // Set up listener for authentication state changes
@@ -32,7 +44,7 @@ export const AuthContextProvider = ({ children }: any) => {
         return () => unsubscribe();
     }, []);
 
-    return <AuthContext.Provider value={{ user, loading }}>{children}</AuthContext.Provider>;
+    return <AuthContext.Provider value={{ user, loading, signOut }}>{children}</AuthContext.Provider>;
 };
 
 // Define the useAuth hook to access the AuthContext

@@ -7,13 +7,9 @@ import { Spinner } from "@chakra-ui/react";
 
 
 export default function PrivateRoute({ component: Component, ...rest }: any) {
-  const user = useAuth();
-  const isLoading = user === null; // Check if authentication status is still loading
+  const { user } = useAuth();
 
-  if (isLoading) {
-    // Render loading indicator if authentication status is still loading
-    return <Spinner />;
-  }
+
 
   return user ? <Component {...rest} /> : <Navigate to="/" replace />;
 }
