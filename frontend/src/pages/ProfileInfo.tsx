@@ -98,7 +98,7 @@ function ProfileInfo() {
                                 style={{ display: "none" }} // Hide the input visually
                                 onChange={handleImageUpload}
                             />
-                            <Button onClick={fileButtonHandler}>Choose File</Button>
+                            <Button _hover={{ borderColor: "#d9c193" }} onClick={fileButtonHandler}>Choose File</Button>
                         </div>
                         <Divider />
                         <Button onClick={handleSubmission}>Next</Button>

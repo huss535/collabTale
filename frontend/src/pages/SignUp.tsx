@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, Input, Box, Button, useToast } from "@chakra-ui/react";
+import { FormControl, FormLabel, Input, Box, Button, useToast, Card, CardHeader, Heading, Divider, CardBody } from "@chakra-ui/react";
 import { MouseEventHandler, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -146,32 +146,45 @@ function SignUp() {
 
 
     return (
-        <Box style={{ backgroundColor: '#FFFFE4', marginTop: 50 }}>
-            <FormControl style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', gap: '30px' }}>
-                <div>
-                    <FormLabel>Email</FormLabel>
-                    <Input type="email" name="email" value={formData.email} onChange={handleChange} />
-                </div>
-                <div>
-                    <FormLabel>Confirm email</FormLabel>
-                    <Input type="email" name="confirmedEmail"
 
-                        value={formData.confirmedEmail} onChange={handleChange} />
-                </div>
 
-                <div>
-                    <FormLabel>Password</FormLabel>
-                    <Input type="password" name="password" value={formData.password} onChange={handleChange} />
-                </div>
+        <div style={{ height: '100vh', backgroundColor: '#FFFFE4', marginTop: '100px' }}>
+            <Card style={{ margin: 'auto', alignContent: 'center', width: '60vw', borderRadius: '10px' }}>
 
-                <div>
-                    <FormLabel>Confirm password</FormLabel>
-                    <Input type="password" name="confirmedPassword" value={formData.confirmedPassword} onChange={handleChange} />
+                <CardHeader >
+                    <Heading textAlign="center" as="h1" size='xl'>Sign up</Heading>
+                </CardHeader>
+                <Divider />
+                <CardBody>
 
-                </div>
-                <Button onClick={(e) => { handleSubmission(e) }}>Next</Button>
-            </FormControl>
-        </Box>
+                    <FormControl style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', gap: '30px' }}>
+                        <div>
+                            <FormLabel>Email</FormLabel>
+                            <Input variant='filled' type="email" name="email" value={formData.email} onChange={handleChange} />
+                        </div>
+                        <div>
+                            <FormLabel>Confirm email</FormLabel>
+                            <Input variant='filled' type="email" name="confirmedEmail"
+
+                                value={formData.confirmedEmail} onChange={handleChange} />
+                        </div>
+
+                        <div>
+                            <FormLabel>Password</FormLabel>
+                            <Input variant='filled' type="password" name="password" value={formData.password} onChange={handleChange} />
+                        </div>
+
+                        <div>
+                            <FormLabel>Confirm password</FormLabel>
+                            <Input variant='filled' type="password" name="confirmedPassword" value={formData.confirmedPassword} onChange={handleChange} />
+
+                        </div>
+                        <Divider />
+                        <Button _hover={{ borderColor: "#d9c193" }} onClick={(e) => { handleSubmission(e) }}>Next</Button>
+                    </FormControl>
+                </CardBody>
+            </Card>
+        </div>
     );
 }
 

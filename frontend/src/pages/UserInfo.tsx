@@ -3,7 +3,6 @@ import axios from "axios";
 import { getAuth, updateProfile } from "firebase/auth";
 import { MouseEventHandler, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useInfo } from "../context/UserInfoContextProvider";
 import { useAuth } from "../context/AuthContextProvider";
 
 interface userInfo {
@@ -98,7 +97,7 @@ function UserInfo() {
 
 
                         <Divider />
-                        <Button onClick={handleSubmission} >Next</Button>
+                        <Button _hover={{ borderColor: "#d9c193" }} onClick={handleSubmission} >Next</Button>
                     </FormControl>
                 </CardBody>
             </Card>

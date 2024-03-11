@@ -1,6 +1,6 @@
 import { getAuth, createUserWithEmailAndPassword, Auth, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../Firebase";
-import { FormControl, FormLabel, Input, Box, Button, useToast } from "@chakra-ui/react";
+import { FormControl, FormLabel, Input, Box, Button, useToast, Card, CardHeader, Heading, Divider, CardBody } from "@chakra-ui/react";
 import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 interface FormData {
@@ -136,23 +136,34 @@ function LoginPage() {
 
 
 
-    return (<>
-        <Box style={{ backgroundColor: '#FFFFE4', marginTop: 50 }}>
-            <FormControl style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', gap: '30px' }}>
-                <div style={{ width: '300px' }}>
-                    <FormLabel>Email</FormLabel>
-                    <Input type="email" variant='filled' name="email" onChange={handleChange} />
-                </div>
-                <div style={{ width: '300px' }}>
-                    <FormLabel>Password</FormLabel>
-                    <Input type="password" variant='filled' name="password" onChange={handleChange} />
-                </div>
+    return (
+        <div style={{ height: '100vh', backgroundColor: '#FFFFE4', marginTop: '100px' }}>
+            <Card style={{ margin: 'auto', alignContent: 'center', width: '60vw', borderRadius: '10px' }}>
 
-                <Button onClick={handleSubmission}  >Next</Button>
-            </FormControl>
-        </Box>
+                <CardHeader >
+                    <Heading textAlign="center" as="h1" size='xl'>Log in</Heading>
+                </CardHeader>
+                <Divider />
+                <CardBody>
 
-    </>);
+                    <FormControl style={{ height: '500px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <div style={{ width: '300px' }}>
+                            <FormLabel>Email</FormLabel>
+                            <Input type="email" variant='filled' name="email" onChange={handleChange} />
+                        </div>
+                        <div style={{ width: '300px' }}>
+                            <FormLabel>Password</FormLabel>
+                            <Input type="password" variant='filled' name="password" onChange={handleChange} />
+                        </div>
+                        <Divider />
+                        <Button _hover={{ borderColor: "#d9c193" }} onClick={handleSubmission}  >Next</Button>
+                    </FormControl>
+                </CardBody>
+            </Card>
+        </div>
+
+
+    );
 }
 
 export default LoginPage;

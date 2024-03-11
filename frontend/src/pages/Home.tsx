@@ -16,8 +16,8 @@ function Home() {
             </div>
             <div>
                 <Stack direction='column' spacing={20} align='center'>
-                    <Button onClick={() => { navigate("/login") }}>Login</Button>
-                    <Button onClick={() => { navigate("/SignUp") }}>Sign up</Button>
+                    <Button _hover={{ borderColor: "#d9c193" }} onClick={() => { navigate("/login") }}>Login</Button>
+                    <Button _hover={{ borderColor: "#d9c193" }} onClick={() => { navigate("/SignUp") }}>Sign up</Button>
                 </Stack>
             </div>
             <div>

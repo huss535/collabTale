@@ -175,13 +175,13 @@ function AddStory() {
 
 
                                 <div>
-                                    <Button onClick={handleOpenModal}>Choose genre(s)</Button>
+                                    <Button _hover={{ borderColor: "#d9c193" }} onClick={handleOpenModal}>Choose genre(s)</Button>
 
                                     <MultiSelectModal isOpen={isOpen1} onClose={handleCloseModal} options={options} onConfirm={handleConfirm} />
 
                                 </div>
                                 <div>
-                                    <Button onClick={onOpen}> Add first entry</Button>
+                                    <Button _hover={{ borderColor: "#d9c193" }} onClick={onOpen}> Add first entry</Button>
 
                                     <Modal onClose={onClose} size="full" isOpen={isOpen}>
                                         <ModalContent>
@@ -199,7 +199,7 @@ function AddStory() {
                                                 />
                                                 <br />
                                                 <br />
-                                                <Button onClick={onClose}>
+                                                <Button _hover={{ borderColor: "#d9c193" }} onClick={onClose}>
                                                     Confirm
                                                 </Button>
 
@@ -214,7 +214,7 @@ function AddStory() {
 
 
                                 <Divider />
-                                <Button onClick={handleSubmission}  >Next</Button>
+                                <Button _hover={{ borderColor: "#d9c193" }} onClick={handleSubmission}  >Next</Button>
                             </FormControl>
                         </CardBody>
                     </CardBody>

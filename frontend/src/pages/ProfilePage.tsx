@@ -74,12 +74,14 @@ function ProfilePage() {
 
 
 
-                <Flex style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'space-around', gap: "20px", width: '70%', flexWrap: 'wrap' }}>
-                    <Button>Your Activity</Button>
-                    <Button>Favourite Stories</Button>
-                    <Button>Edit Profile</Button>
+                { /*  <Flex style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'space-around', gap: "20px", width: '70%', flexWrap: 'wrap' }}>
+                    <Button _hover={{ borderColor: "#d9c193" }} >Your Activity</Button>
+                    <Button _hover={{ borderColor: "#d9c193" }} >Favourite Stories</Button>
+                    <Button _hover={{ borderColor: "#d9c193" }} >Edit Profile</Button>
 
                 </Flex>
+    */}
+
             </Flex>
 
 

@@ -20,10 +20,9 @@ function App() {
           <Route path="/GuestPage" element={<GuestPage />} />
           <Route path="/DisplayStory" element={<StoryDisplay />} />
           <Route path='/Login' element={<LoginPage />} />
-
           <Route path='/SignUp' element={<SignUp />} />
-          <Route path='/UserInfo' element={<UserInfo />} />
-          <Route path='/ProfileInfo' element={<ProfileInfo />} />
+          <Route path='/UserInfo' element={<PrivateRoute component={UserInfo} />} />
+          <Route path='/ProfileInfo' element={<PrivateRoute component={ProfileInfo} />} />
           <Route path='/profile' element={<PrivateRoute component={ProfilePage} />} />
           <Route path='/addStory' element={<PrivateRoute component={AddStory} />} />
 
